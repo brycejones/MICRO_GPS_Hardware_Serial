@@ -1,3 +1,4 @@
+
 // Test code for Adafruit GPS modules using MTK3329/MTK3339 driver
 //
 // This code shows how to listen to the GPS module in an interrupt
@@ -38,7 +39,7 @@ HardwareSerial mySerial = Serial1;
 // Set GPSECHO to 'false' to turn off echoing the GPS data to the Serial console
 // Set to 'true' if you want to debug and listen to the raw GPS sentences
 //#define GPSECHO  true
-#define GPSECHO  false
+#define GPSECHO true
 int led = 13;     // GPS fix indicator LED
 
 void setup()  
@@ -50,7 +51,7 @@ void setup()
   // connect at 115200 so we can read the GPS fast enough and echo without dropping chars
   // also spit it out
   Serial.begin(115200);
-  delay(5000);
+  delay(10000);
   Serial.println("GPS hardware serial sketch for Arduino MICRO");
 
   // 9600 NMEA is the default baud rate for Adafruit MTK GPS's- some use 4800
@@ -68,9 +69,19 @@ void setup()
   // For the parsing code to work nicely and have time to sort thru the data, and
   // print it out we don't suggest using anything higher than 1 Hz
 
-  // Request updates on antenna status, comment out to keep quiet
-  GPS.sendCommand(PGCMD_ANTENNA);
 
+  // ************************************************************
+  // GPS.sendCommand(PGCMD_ANTENNA);  ---Incorrect!!!
+  // Commnets: brycej date: 02/18/2014
+  // I think this is incorrect and needs to be updated in the header files
+  // FORMAT: $PGTOP,11,value*checksum
+  //    1. Active Antenna Shorted
+  //    2. Using Internal Antenna
+  //    3. Using Active Antenna
+  // GPS.sendCommand(PGCMD_ANTENNA);  ---Incorrect!!!
+  GPS.sendCommand(PGTOP_ANTENNA);
+
+  
   delay(1000);
   // Ask for firmware version
   mySerial.println(PMTK_Q_RELEASE);
@@ -133,6 +144,8 @@ void loop()                     // run over and over again
       Serial.print("Angle: "); Serial.println(GPS.angle);
       Serial.print("Altitude: "); Serial.println(GPS.altitude);
       Serial.print("Satellites: "); Serial.println((int)GPS.satellites);
+
+      
     }
   }
 }
