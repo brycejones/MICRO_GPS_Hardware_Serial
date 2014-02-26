@@ -51,7 +51,7 @@ void setup()
   // connect at 115200 so we can read the GPS fast enough and echo without dropping chars
   // also spit it out
   Serial.begin(115200);
-  delay(10000);
+  delay(15000);
   Serial.println("GPS hardware serial sketch for Arduino MICRO");
 
   // 9600 NMEA is the default baud rate for Adafruit MTK GPS's- some use 4800
@@ -71,14 +71,14 @@ void setup()
 
 
   // ************************************************************
-  // GPS.sendCommand(PGCMD_ANTENNA);  ---Incorrect!!!
+  GPS.sendCommand(PGCMD_ANTENNA);  // required to get PGTOP working
   // Commnets: brycej date: 02/18/2014
   // I think this is incorrect and needs to be updated in the header files
   // FORMAT: $PGTOP,11,value*checksum
   //    1. Active Antenna Shorted
-  //    2. Using Internal Antenna
-  //    3. Using Active Antenna
-  // GPS.sendCommand(PGCMD_ANTENNA);  ---Incorrect!!!
+  //    2. Using Internal Antenna $PGTOP,11,2*6E
+  //    3. Using Active Antenna   $PGTOP,11,3*6F
+  //  
   GPS.sendCommand(PGTOP_ANTENNA);
 
   
@@ -144,7 +144,25 @@ void loop()                     // run over and over again
       Serial.print("Angle: "); Serial.println(GPS.angle);
       Serial.print("Altitude: "); Serial.println(GPS.altitude);
       Serial.print("Satellites: "); Serial.println((int)GPS.satellites);
-
+      Serial.print("Antenna Status: "); Serial.print(GPS.antennastatus, DEC);    //printing antenna status
+  
+      switch ( GPS.antennastatus ) {
+           case 1:
+              Serial.print(" -Antenna Shorted!!\n");        // Fault with Antenna
+           break;
+           case 2:
+              Serial.print(" -Using Internal Antenna\n");   // GPS using internal ceramic antenna
+           break;
+           case 3:
+              Serial.print(" -Using Active Antenna\n");           // GPS using active antenna
+           break;
+           
+           default:
+           // Get out of herw
+           break;
+           }
+  
+      Serial.print("\n");
       
     }
   }
