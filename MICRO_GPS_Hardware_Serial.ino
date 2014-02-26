@@ -12,11 +12,12 @@
 // Pick one up today at the Adafruit electronics shop 
 // and help support open source hardware & software! -ada
 
-//This code is intended for use with Arduino Leonardo and other ATmega32U4-based Arduinos
+// This code is intended for use with Arduino Leonardo and other ATmega32U4-based Arduinos
+// such as the Arduino MICRO.
 
 #include <Adafruit_GPS.h>
-#include <SoftwareSerial.h>
-
+#include <SoftwareSerial.h>   
+//    -------Wiring Details ----------
 // Connect the GPS Power pin to 5V
 // Connect the GPS Ground pin to ground
 // If using software serial: 
@@ -154,11 +155,11 @@ void loop()                     // run over and over again
               Serial.print(" -Using Internal Antenna\n");   // GPS using internal ceramic antenna
            break;
            case 3:
-              Serial.print(" -Using Active Antenna\n");           // GPS using active antenna
+              Serial.print(" -Using Active Antenna\n");     // GPS using active antenna
            break;
            
            default:
-           // Get out of herw
+           // Get out of here
            break;
            }
   
