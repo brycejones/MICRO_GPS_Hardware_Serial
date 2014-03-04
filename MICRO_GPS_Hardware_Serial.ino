@@ -14,13 +14,15 @@
 
 // This code is intended for use with Arduino Leonardo and other ATmega32U4-based Arduinos
 // such as the Arduino MICRO.
+//
+// Todo :--) add switch to toggle verbose(full NEMA) reporting
 
 #include <Adafruit_GPS.h>
 #include <SoftwareSerial.h>   
 //    -------Wiring Details ----------
 // Connect the GPS Power pin to 5V
 // Connect the GPS Ground pin to ground
-// If using software serial: 
+// If using software serial(this sketch uses hdwe serial by default!): 
 //   Connect the GPS TX (transmit) pin to Digital 8
 //   Connect the GPS RX (receive) pin to Digital 7
 // If using hardware serial(sketch example default):
@@ -32,8 +34,8 @@
 //SoftwareSerial mySerial(8, 7);
 //Adafruit_GPS GPS(&mySerial);
 
-// If using hardware serial, comment
-// out the above two lines and enable these two lines instead:
+// If using hardware serial, comment out the above two
+// two lines and enable the following two lines instead:
 Adafruit_GPS GPS(&Serial1);
 HardwareSerial mySerial = Serial1;
 
