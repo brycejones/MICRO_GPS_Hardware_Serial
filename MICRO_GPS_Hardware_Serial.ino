@@ -17,7 +17,7 @@
 //
 // Todo :--) add switch to toggle verbose(full NEMA) reporting
 
-#include <Adafruit_GPS.h>
+#include <Adafruit_GPSmod.h>
 #include <SoftwareSerial.h>   
 //    -------Wiring Details ----------
 // Connect the GPS Power pin to 5V
